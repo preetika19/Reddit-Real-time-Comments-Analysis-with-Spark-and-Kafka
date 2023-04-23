@@ -1,0 +1,20 @@
+open new terminal: cd bigData/kafka_2.13-3.4.0
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+open new terminal: cd bigData/kafka_2.13-3.4.0
+bin/kafka-server-start.sh config/server.properties
+
+open new terminal: cd bigData/kafka_2.13-3.4.0
+python3 producer.py localhost:9092 topic1
+
+open new terminal: cd bigData/kafka_2.13-3.4.0
+../spark-3-bin-hadoop3/bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.4.2 consumer.py localhost:9092 subscribe topic1 topic2
+
+open new terminal: cd bigData/
+docker-compose up
+
+open new terminal:
+bin/logstash -f kafka-elastic-pipeline.conf
+
+open browser: to open kibana dashboard and create new dashboard
+http://localhost:5601/
